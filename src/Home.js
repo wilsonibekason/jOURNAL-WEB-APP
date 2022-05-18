@@ -23,6 +23,9 @@ const displayUser = async (credentials) => {
     })
     .catch((error) => {
       if (error.response) {
+        console.log("====================================");
+        console.log(error.response);
+        console.log("====================================");
         console.log(error.response.data);
         console.log(error.response.status);
         console.log(error.response.headers);
@@ -35,7 +38,6 @@ console.log(localStorage.getItem("token"));
 console.log("====================================");
 
 const Home = ({ posts }) => {
-  
   const [login, setLogin] = useState(false);
 
   useEffect(() => {
@@ -50,7 +52,7 @@ const Home = ({ posts }) => {
   }, []);
   return (
     <main className="Home">
-      {!login ? (
+      {login ? (
         <>
           <h1>hello</h1>
           <Feed posts={posts} />
