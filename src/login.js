@@ -17,6 +17,22 @@ const Register = () => {
   const from = location.state?.from?.pathname || "/";
 
   // initiallizing register form and login form logic
+  // onSubmit={async ({ email, username, password }) => {
+  //   // same shape as initial values
+  //   const response = await RegisterUser({
+  //     email,
+  //     password,
+  //     username,
+  //     SignUpType: "email",
+  //   });
+  //   navigate(from, { replace: true });
+  //   console.log("submitted");
+  //   console.log(email + "   " + username + password);
+  //   console.log("====================================");
+  //   console.log(response);
+  //   console.log("====================================");
+  //   localStorage.setItem("token", JSON.stringify(response));
+  // }}
   const RegisterUser = async (credentials) => {
     api({
       method: "post",
@@ -29,6 +45,7 @@ const Register = () => {
         console.log(data);
         console.log(data.headers["access-control-allow-methods"]);
         console.log(data.headers["authorization"].slice(6, 100));
+        localStorage.setItem("token", JSON.stringify(data));
         console.log("====================================");
         data.json();
       })
@@ -86,18 +103,50 @@ const Register = () => {
         }}
         validationSchema={SignupSchema}
         onSubmit={async ({ email, username, password }) => {
-          // same shape as initial values
-          const response = await RegisterUser({
-            email,
-            password,
-            username,
-            SignUpType: "email",
-          });
-          navigate(from, { replace: true });
-          console.log("submitted");
+          try {
+            const response = await api.post(
+              "/auth/login",
+              { email, password },
+              {
+                headers: { "Content-Type": "multipart/form-data" },
+                withCredientials: true,
+              }
+            );
+            console.log(JSON.stringify(response?.data));
+            //console.log(JSON.stringify(response));
+            const accessToken = response?.data?.accessToken;
+            const roles = response?.data?.roles;
+            console.log("====================================");
+            console.log(accessToken);
+            console.log(roles);
+            console.log(response.headers["access-control-allow-methods"]);
+            console.log(response.headers["authorization"].slice(6, 500));
+            const token = response.headers["authorization"].slice(6, 400);
+            localStorage.setItem("token", JSON.stringify(token));
+            console.log("====================================");
+            navigate(from, { replace: true });
+          } catch (err) {
+            if (!err?.response) {
+              setErrMsg("No Server Response");
+            } else if (err.response?.status === 400) {
+              setErrMsg("Missing Username or Password");
+            } else if (err.response?.status === 401) {
+              setErrMsg("Unauthorized");
+            } else if (err.response?.status === 403) {
+              console.log(err.response.data);
+              console.log(err.response.status);
+              console.log(err.response.headers);
+              console.log("====================================");
+              console.log(err.response?.data?.errors["authentication.error"]);
 
-          console.log(email + "   " + username + password);
-          localStorage.setItem("token", response["token"]);
+              console.log("====================================");
+              setErrMsg(err.response?.data?.errors["authentication.error"]);
+              //setErrMsg("Email or password is incorrect");
+            } else {
+              setErrMsg("Login Failed");
+            }
+            //errRef.current.focus();
+          }
         }}
       >
         {({ errors, touched }) => (

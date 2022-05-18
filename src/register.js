@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import api from "./api/posts";
 import * as Yup from "yup";
 import { TextField } from "@mui/material";
 import { Formik, Form, Field } from "formik";
 import "./form.css";
+import { useLocation, useNavigate } from "react-router-dom";
+
+// same shape as initial values
+// const response = await RegisterUser({
+//   email,
+//   password,
+//   username,
+//   SignUpType: "email",
+// });
+// console.log("submitted");
+// console.log(email + "   " + username + password);
+// localStorage.setItem("token", response["token"]);
 
 // initiallizing register form and login form logic
 const RegisterUser = async (credentials) => {
@@ -29,6 +41,10 @@ const RegisterUser = async (credentials) => {
 };
 
 const Register = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/login";
+  const [errMsg, setErrMsg] = useState("");
   const SignupSchema = Yup.object().shape({
     username: Yup.string()
       .min(2, "Too Short!")
@@ -52,16 +68,36 @@ const Register = () => {
         }}
         validationSchema={SignupSchema}
         onSubmit={async ({ email, username, password }) => {
-          // same shape as initial values
-          const response = await RegisterUser({
-            email,
-            password,
-            username,
-            SignUpType: "email",
-          });
-          console.log("submitted");
-          console.log(email + "   " + username + password);
-          localStorage.setItem("token", response["token"]);
+          try {
+            const response = await api.post(
+              "/auth/signup",
+              { email, password, username, SignUpType: "email" },
+              {
+                headers: { "Content-Type": "multipart/form-data" },
+                withCredientials: true,
+              }
+            );
+            console.log(JSON.stringify(response?.data));
+            //console.log(JSON.stringify(response));
+            const accessToken = response?.data?.accessToken;
+            const roles = response?.data?.roles;
+            console.log("====================================");
+            console.log(accessToken);
+            console.log(roles);
+            console.log("====================================");
+            navigate(from, { replace: true });
+          } catch (err) {
+            if (!err?.response) {
+              setErrMsg("No Server Response");
+            } else if (err.response?.status === 400) {
+              setErrMsg("Missing Username or Password");
+            } else if (err.response?.status === 401) {
+              setErrMsg("Unauthorized");
+            } else {
+              setErrMsg("Login Failed");
+            }
+            //errRef.current.focus();
+          }
         }}
       >
         {({ errors, touched }) => (
