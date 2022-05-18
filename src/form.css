@@ -1,0 +1,466 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  color: #333333;
+}
+
+label {
+  display: inline-block;
+  font-size: 0.875rem;
+  line-height: 1;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="password"],
+input[type="email"] {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  height: 2.5rem;
+  border-radius: 0.25rem;
+  background-color: inherit;
+  border: 1px solid #666666;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+}
+
+input,
+button {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.button:focus,
+.rvt-button:focus,
+.button--focus,
+.button--secondary:focus,
+.button--secondary-focus,
+.button--plain:focus,
+.button--plain-focus,
+.button--plain--focus {
+  outline: none;
+  -webkit-box-shadow: 0 0 0 0.125rem #ffffff, 0 0 0 0.25rem #006298;
+  box-shadow: 0 0 0 0.125rem #ffffff, 0 0 0 0.25rem #006298;
+}
+
+.button {
+  background-color: #006298;
+  border: 0.125rem solid #006298;
+  border-radius: 0.25rem;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: bold;
+  line-height: 1;
+  text-decoration: none;
+  position: relative;
+  height: 2.5rem;
+  padding: 0 0.75rem;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-transition: -webkit-box-shadow 0.2s ease;
+  transition: -webkit-box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease, -webkit-box-shadow 0.2s ease;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100%;
+}
+
+svg {
+  flex-shrink: 0;
+}
+
+.content {
+  overflow: auto;
+  height: auto;
+  flex: 1 0 auto;
+}
+
+.base {
+  padding: 2rem 2.5rem 2.5rem;
+  background-color: #ffffff;
+  overflow: auto;
+}
+
+.base-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.username {
+  margin-top: 0.5rem;
+}
+
+.guest-email {
+  margin: 0.5rem 0 1rem;
+}
+
+.guest-email-button {
+  margin-top: 1rem;
+}
+
+input.id-highlight,
+input.iu-highlight,
+input.highlight-warning {
+  -webkit-transition: -webkit-box-shadow 0.2s ease;
+  transition: -webkit-box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease, -webkit-box-shadow 0.2s ease;
+  border-color: #f5bb17;
+  -webkit-box-shadow: 0 0 0 0.125rem #f5bb17;
+  box-shadow: 0 0 0 0.125rem #f5bb17;
+}
+
+input.id-highlight:focus,
+input.iu-highlight:focus,
+input.highlight-warning:focus {
+  border-color: #666666;
+  -webkit-box-shadow: 0 0 0 0.125rem #ffffff, 0 0 0 0.2875rem #f5bb17;
+  box-shadow: 0 0 0 0.125rem #ffffff, 0 0 0 0.2875rem #f5bb17;
+}
+
+input.at-highlight,
+input.highlight-info {
+  -webkit-transition: -webkit-box-shadow 0.2s ease;
+  transition: -webkit-box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease, -webkit-box-shadow 0.2s ease;
+  border-color: #006298;
+  -webkit-box-shadow: 0 0 0 0.125rem #006298;
+  box-shadow: 0 0 0 0.125rem #006298;
+}
+
+input.at-highlight:focus,
+input.highlight-info:focus {
+  border-color: #666666;
+  -webkit-box-shadow: 0 0 0 0.125rem #ffffff, 0 0 0 0.2875rem #006298;
+  box-shadow: 0 0 0 0.125rem #ffffff, 0 0 0 0.2875rem #006298;
+}
+
+.info {
+  color: #006298;
+}
+
+.success {
+  color: #008a28;
+}
+
+.warning {
+  color: #f5bb17;
+}
+
+.danger {
+  color: #df3603;
+}
+
+.passphrase {
+  margin-top: 1.5rem;
+}
+
+.cta {
+  margin-top: 2.5rem;
+}
+
+.help {
+  margin-top: 2.5rem;
+  text-align: center;
+}
+
+.help a,
+.help button {
+  font-size: 0.875rem;
+  text-decoration: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 0.875rem;
+  padding: 0 0.875rem;
+}
+
+.help a:active,
+.help a:hover,
+.help a:focus {
+  color: #134a71;
+  text-decoration: underline;
+}
+
+.help svg {
+  text-decoration: none !important;
+}
+
+.help span,
+.left-bump {
+  margin-left: 0.25rem;
+}
+
+#seeOptions,
+#create {
+  font-weight: normal;
+  width: auto;
+}
+
+.footer {
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 0.75rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.footer a {
+  color: #333;
+}
+
+#noscript {
+  margin-top: 1.5rem;
+  margin-bottom: -24rem;
+}
+
+.base-duo {
+  margin-bottom: 0.5rem;
+}
+
+#duo_iframe {
+  border-width: 0;
+  width: 100%;
+  min-width: 288px;
+  max-width: 360px;
+  height: 380px;
+}
+
+#login-button {
+  padding-bottom: 1px;
+}
+
+/*Tabs for University + Guest */
+.lockup {
+  height: 3.3125rem;
+}
+
+.lockup.external {
+  height: 7rem;
+}
+
+.lockup-tabs {
+  display: flex;
+  gap: 0.5rem;
+  position: absolute;
+  bottom: 0;
+  margin: 0 0.5rem 0 1rem;
+  font-size: 0.875rem;
+}
+
+.lockup-tabs button:focus {
+  /* Visible in the full-color space */
+  box-shadow: inset 0 0 0 0.125rem #006298;
+  /* Visible in Windows high-contrast themes */
+  outline: transparent dotted 2px;
+}
+
+.tab[aria-selected="true"] {
+  background-color: #ffffff !important;
+  border: none;
+  border-top: 0.25rem solid #006298;
+}
+
+.tab:focus:active {
+  padding: 0.5rem 1rem;
+}
+
+.tab:hover,
+.tab:active {
+  border: none !important;
+  border-top: 0.25rem solid #006298 !important;
+  background-color: #d2d2d2;
+}
+
+.tab {
+  border: none;
+  background-color: #d2d2d2;
+  padding: 0.5625rem 0.875rem !important;
+  border-top: 4px solid #eaeaea;
+}
+
+[role="tabpanel"]:focus {
+  box-shadow: inset 0 0 0 0.125rem #006298;
+  outline: none;
+}
+
+/* Horizontal rule for Guest */
+.hr {
+  width: 100%;
+  text-align: center;
+  background-color: #ffffff;
+  position: relative;
+  color: #333333;
+  z-index: 1;
+  overflow: hidden;
+  margin: 2rem 0;
+  font-size: 1rem;
+}
+
+.hr:before,
+.hr:after {
+  width: 50%;
+  top: 51%;
+  overflow: hidden;
+  height: 1px;
+  background-color: #c3c3c3;
+  content: "\a0";
+  position: absolute;
+}
+
+.hr:before {
+  margin-left: -54%;
+  text-align: right;
+}
+
+.hr:after {
+  margin-left: 4%;
+}
+
+.hide-mobile {
+  display: none;
+}
+
+.centered.base > img {
+  padding-top: 1rem;
+}
+
+/* Small view ports and up */
+@media screen and (min-width: 30em) {
+  html,
+  body {
+    background-color: #eaeaea;
+    height: auto;
+  }
+
+  .centered {
+    margin: auto;
+    max-width: 440px;
+    width: 100%;
+    position: inherit;
+  }
+
+  .lockup {
+    overflow: hidden;
+    margin-top: 2rem;
+    bottom: -2rem;
+    height: initial;
+    padding-bottom: 1rem;
+  }
+
+  .lockup img {
+    margin: 0;
+    width: 50px;
+  }
+
+  .lockup-iu {
+    display: inline-block;
+    position: absolute;
+    top: 4px;
+    left: 67px;
+  }
+
+  .lockup-title {
+    top: 22px;
+    left: 75px;
+    font-size: 1.625rem;
+  }
+
+  .trident {
+    min-width: 58px;
+    -ms-flex-preferred-size: 58px;
+    flex-basis: 58px;
+    height: 58px;
+    margin: -1rem 0 2.5rem 1rem;
+  }
+
+  .trident-logo {
+    width: 50px;
+    height: 58px;
+  }
+
+  .tab[aria-selected="true"],
+  .tab:hover,
+  .tab:active,
+  .content section {
+    box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.09);
+  }
+
+  .centered {
+    max-width: 27.5rem;
+    margin: 1rem auto;
+  }
+
+  .centered.lockup {
+    max-width: 29.5rem;
+    height: 0;
+    min-height: 5.125rem;
+    padding: 1rem 0;
+  }
+
+  .centered.lockup.external {
+    min-height: 8.5625rem;
+  }
+
+  .third {
+    padding: 0 0.75rem;
+  }
+
+  .footer {
+    margin-bottom: 4rem;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+
+  .base-title {
+    font-size: 1.4375rem;
+  }
+}
+
+/* Tab width for small mobile devices */
+@media only screen and (max-width: 22rem) {
+  .base {
+    padding: 2rem 2rem 2.5rem;
+  }
+
+  .tab {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+/* Removes padding to allow more width for Duo iframe on smaller devices */
+@media only screen and (max-width: 23.75rem) {
+  .duo {
+    padding: 2rem 1rem 2.5rem 1rem;
+  }
+}
+
+/* Applied top margin for screens with vertical space */
+@media only screen and (min-height: 54rem) and (min-width: 30em) {
+  .header {
+    margin-top: 2rem;
+  }
+}
