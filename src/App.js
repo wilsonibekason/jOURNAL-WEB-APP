@@ -10,7 +10,7 @@ import Missing from "./Missing";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
-import api from "./api/posts";
+import api from "./api/journal-api";
 import Register from "./register";
 import Login from "./login";
 
@@ -27,8 +27,13 @@ function App() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await api.get("/posts");
-        setPosts(response.data);
+        console.log("fetching journals");
+        const response = await api.get("/journals");
+        console.log("====================================");
+        console.log(response.data);
+        console.log("====================================");
+        console.log(response.data.body);
+        setPosts(response.data.body);
       } catch (err) {
         if (err.response) {
           // Not in the 200 response range
@@ -42,26 +47,33 @@ function App() {
     };
 
     fetchPosts();
+    console.log("====================================");
+    console.log(posts);
+    console.log("====================================");
   }, []);
 
   useEffect(() => {
+    var currentPost = [...posts];
     const filteredResults = posts.filter(
       (post) =>
         post.body.toLowerCase().includes(search.toLowerCase()) ||
         post.title.toLowerCase().includes(search.toLowerCase())
     );
-
     setSearchResults(filteredResults.reverse());
   }, [posts, search]);
+
+  console.log("====================================");
+  console.log(searchResults);
+  console.log("====================================");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const id = posts.length ? posts[posts.length - 1].id + 1 : 1;
-    const datetime = format(new Date(), "MMMM dd, yyyy pp");
-    const newPost = { id, title: postTitle, datetime, body: postBody };
+    const date = format(new Date(), "MMMM dd, yyyy pp");
+    const newPost = { id, title: postTitle, date, body: postBody };
     try {
-      const response = await api.post("/posts", newPost);
-      const allPosts = [...posts, response.data];
+      const response = await api.post("/journals", newPost);
+      const allPosts = [...posts, response.data.body];
       setPosts(allPosts);
       setPostTitle("");
       setPostBody("");

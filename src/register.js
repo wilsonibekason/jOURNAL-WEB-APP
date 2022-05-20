@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import api from "./api/posts";
+import api from "./api/journal-api";
 import * as Yup from "yup";
 import { TextField } from "@mui/material";
 import { Formik, Form, Field } from "formik";

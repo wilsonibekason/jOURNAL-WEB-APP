@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import api from "./api/posts";
+import api from "./api/journal-api";
 import * as Yup from "yup";
 import { TextField } from "@mui/material";
 import { Formik, Form, Field } from "formik";
@@ -120,9 +120,9 @@ const Register = () => {
             console.log(accessToken);
             console.log(roles);
             console.log(response.headers["access-control-allow-methods"]);
-            console.log(response.headers["authorization"].slice(6, 500));
-            const token = response.headers["authorization"].slice(6, 400);
-            localStorage.setItem("token", JSON.stringify(token));
+            console.log(response.headers["authorization"].slice(7));
+            const token = response.headers["authorization"].slice(7);
+            localStorage.setItem("token", token);
             console.log("====================================");
             navigate(from, { replace: true });
           } catch (err) {

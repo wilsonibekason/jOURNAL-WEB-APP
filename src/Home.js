@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Feed from "./Feed";
-import api from "./api/posts";
+import api from "./api/journal-api";
 //eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqYW1lc0BnbWFpbC5jb20iLCJleHAiOjE2NTM3OTc4OTh9.rLFbJB8Mx5Nls-8gO6lhzLuKAq1soyYRv6VpXEg0dsaP68Gqsb9SgYEAKMT5zQvaEQXsu1lsRj7Mfz3_mfHOVg
 // const displayUser = async (credentials) => {
 //   api({
@@ -36,36 +36,50 @@ import api from "./api/posts";
 // console.log("====================================");
 
 const Home = ({ posts }) => {
-  const [login, setLogin] = useState(false);
-  var token = localStorage.getItem("token");
-  console.log("====================================");
-  console.log(token);
-  console.log("====================================");
+  // const [login, setLogin] = useState(false);
+  // const [errMsg, setErrMsg] = useState("");
+  // var token = localStorage.getItem("token");
+  // console.log("====================================");
+  // console.log(token);
+  // console.log("====================================");
 
-  useEffect(() => {
-    // async function getUser() {
-    //   try {
-    //     const response = await api.get("/users");
-    //     localStorage.getItem("token");
-    //     console.log(response);
-    //     console.log(JSON.stringify(response?.data));
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // }
-    // getUser();
-    async function makeGetRequest() {
-      let res = await api.get("/users");
-      setLogin(true);
-      let data = res.data;
-      console.log(data);
-    }
-
-    makeGetRequest();
-  }, []);
+  // useEffect(() => {
+  //   async function makeGetRequest() {
+  //     await api({
+  //       method: "get",
+  //       url: "/journals",
+  //     })
+  //       .then((res) => {
+  //         let data = res.data;
+  //         console.log("====================================");
+  //         console.log(data);
+  //         console.log("====================================");
+  //       })
+  //       .catch((err) => {
+  //         if (!err?.response) {
+  //           setErrMsg("No Server Response");
+  //         } else if (err.response?.status === 400) {
+  //           setErrMsg("Missing Username or Password");
+  //         } else if (err.response?.status === 401) {
+  //           setErrMsg("Unauthorized");
+  //         } else if (err.response?.status === 403) {
+  //           console.log(err.response.data);
+  //           console.log(err.response.status);
+  //           console.log(err.response.headers);
+  //           console.log("====================================");
+  //         } else {
+  //           setErrMsg("Login Failed");
+  //         }
+  //       });
+  //   }
+  //   makeGetRequest();
+  // }, []);
+  console.log("====================================");
+  console.log(posts);
+  console.log("====================================");
   return (
     <main className="Home">
-      {!login ? (
+      {posts.length ? (
         <>
           <h1>hello</h1>
           <Feed posts={posts} />
