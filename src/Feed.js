@@ -6,8 +6,8 @@ const Feed = ({ posts }) => {
   console.log("====================================");
   return (
     <>
-      {posts.map((post) => (
-        <Post key={post.id} post={post} />
+      {posts.map((post, index) => (
+        <Post key={post.body + index} post={post} />
       ))}
     </>
   );

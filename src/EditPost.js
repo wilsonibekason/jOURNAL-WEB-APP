@@ -10,18 +10,25 @@ const EditPost = ({
   setEditTitle,
 }) => {
   const { id } = useParams();
-  const post = posts.find((post) => post.id.toString() === id);
-
+  const post = posts.find(({ id }) => {
+    console.log("====================================");
+    console.log(id);
+    console.log("====================================");
+    return id.toString() === id;
+  });
+  console.log("====================================");
+  console.log(posts);
+  console.log("====================================");
   useEffect(() => {
     if (post) {
-      setEditTitle(post.title);
+      setEditTitle(post.date);
       setEditBody(post.body);
     }
   }, [post, setEditTitle, setEditBody]);
 
   return (
     <main className="NewPost">
-      {editTitle && (
+      {editBody && (
         <>
           <h2>Edit Post</h2>
           <form className="newPostForm" onSubmit={(e) => e.preventDefault()}>
@@ -46,7 +53,7 @@ const EditPost = ({
           </form>
         </>
       )}
-      {!editTitle && (
+      {!editBody && (
         <>
           <h2>Post Not Found</h2>
           <p>Well, that's disappointing.</p>

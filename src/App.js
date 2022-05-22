@@ -22,6 +22,11 @@ function App() {
   const [postBody, setPostBody] = useState("");
   const [editTitle, setEditTitle] = useState("");
   const [editBody, setEditBody] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const [sharedImage, setSharedImage] = useState("");
+  const [videoLink, setVideoLink] = useState("");
+  const [postAssetArea, setPostAssetArea] = useState("");
+
   const history = useNavigate();
 
   useEffect(() => {
@@ -47,17 +52,13 @@ function App() {
     };
 
     fetchPosts();
-    console.log("====================================");
-    console.log(posts);
-    console.log("====================================");
   }, []);
 
   useEffect(() => {
-    var currentPost = [...posts];
     const filteredResults = posts.filter(
       (post) =>
         post.body.toLowerCase().includes(search.toLowerCase()) ||
-        post.title.toLowerCase().includes(search.toLowerCase())
+        post.user.email.toLowerCase().includes(search.toLowerCase())
     );
     setSearchResults(filteredResults.reverse());
   }, [posts, search]);
@@ -66,47 +67,138 @@ function App() {
   console.log(searchResults);
   console.log("====================================");
 
+  const ShowPostArea = (area) => {
+    setSharedImage("");
+    setVideoLink("");
+    setPostAssetArea(area);
+  };
+
+  const handleAssetChange = (e) => {
+    const image = e.target.files[0];
+    if (image === "" || image === undefined) {
+      alert(`Not an image, the file is ${typeof image}`);
+    }
+    setSharedImage(image);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const id = posts.length ? posts[posts.length - 1].id + 1 : 1;
-    const date = format(new Date(), "MMMM dd, yyyy pp");
-    const newPost = { id, title: postTitle, date, body: postBody };
+    const images = [];
+    const date = "1618632106290";
+    const dbId = Math.floor(Math.random() * 400000000) + 1000000000;
+    // console.log(dbIds);
+    // const dbIds = 543211233;
+    const datetime = format(new Date(), "MMMM dd, yyyy pp");
+    //const newPosts = { id, title: postTitle, datetime, body: postBody };
+    const newPost = { id, images: sharedImage, body: postBody, dbId, date };
+    console.log("====================================");
+    console.log(newPost);
+    console.log("====================================");
+    //?images=ssklsskss&body=snjajkjjj&dbId=1622037629003&date=1618632106290
     try {
-      const response = await api.post("/journals", newPost);
+      const response = await api.post("/journals", newPost, {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredientials: true,
+      });
+      console.log("====================================");
+      console.log(response?.data);
+      console.log("====================================");
+      console.log("====================================");
+      console.log(" POSTING DATA");
+      console.log("====================================");
       const allPosts = [...posts, response.data.body];
       setPosts(allPosts);
       setPostTitle("");
       setPostBody("");
       history.push("/");
-    } catch (err) {
-      console.log(`Error: ${err.message}`);
+    } catch (error) {
+      if (error.response) {
+        // Request made and server responded
+        console.log(error.response.data);
+        const errorMessages = error.response?.data?.errors;
+        Object.entries(errorMessages).forEach((errorValue, value) => {
+          console.log(errorValue);
+          errorValue.map((value) => console.log(value));
+        });
+        setErrMsg(error.response?.data?.errors);
+        console.log(error.response?.data?.errors);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log("Error", error.message);
+      }
     }
   };
 
   const handleEdit = async (id) => {
     const datetime = format(new Date(), "MMMM dd, yyyy pp");
-    const updatedPost = { id, title: editTitle, datetime, body: editBody };
+    const images = [""];
+    const date = "1618632106290";
+    const updatedPost = { id, images, body: editBody, date };
+    console.log("====================================");
+    console.log(updatedPost);
+    console.log("====================================");
     try {
-      const response = await api.put(`/posts/${id}`, updatedPost);
+      const response = await api.patch(`/journals/${id}`, updatedPost, {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredientials: true,
+      });
       setPosts(
         posts.map((post) => (post.id === id ? { ...response.data } : post))
       );
       setEditTitle("");
       setEditBody("");
       history.push("/");
-    } catch (err) {
-      console.log(`Error: ${err.message}`);
+    } catch (error) {
+      if (error.response) {
+        // Request made and server responded
+        console.log(error.response.data);
+        const errorMessages = error.response?.data?.errors;
+
+        setErrMsg(error.response?.data?.errors);
+        console.log(error.response?.data?.errors);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log("Error", error.message);
+      }
     }
   };
 
   const handleDelete = async (id) => {
     try {
-      await api.delete(`/posts/${id}`);
+      await api.delete(`/journals/${id}`, {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredientials: true,
+      });
       const postsList = posts.filter((post) => post.id !== id);
       setPosts(postsList);
       history.push("/");
-    } catch (err) {
-      console.log(`Error: ${err.message}`);
+    } catch (error) {
+      if (error.response) {
+        // Request made and server responded
+        console.log(error.response.data);
+        const errorMessages = error.response?.data?.errors;
+        setErrMsg(error.response?.data?.errors);
+        console.log(error.response?.data?.errors);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log("Error", error.message);
+      }
     }
   };
 
@@ -126,6 +218,10 @@ function App() {
               setPostTitle={setPostTitle}
               postBody={postBody}
               setPostBody={setPostBody}
+              handleAssetChange={handleAssetChange}
+              sharedImage={sharedImage}
+              videoLink={videoLink}
+              setVideoLink={setVideoLink}
             />
           }
         ></Route>
